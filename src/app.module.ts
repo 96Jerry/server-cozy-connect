@@ -5,6 +5,11 @@ import { join } from 'path';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { db } from './config';
 import configuration from './config/configuration';
+import { WorkModule } from './work/work.module';
+import { FamilyModule } from './family/family.module';
+import { AuthModule } from './auth/auth.module';
+import { APP_FILTER } from '@nestjs/core';
+import { HttpExceptionFilter } from './exception/http-exception.filter';
 
 @Module({
   imports: [
@@ -22,6 +27,15 @@ import configuration from './config/configuration';
       inject: [ConfigService],
     }),
     UserModule,
+    WorkModule,
+    FamilyModule,
+    AuthModule,
+  ],
+  providers: [
+    {
+      provide: APP_FILTER,
+      useClass: HttpExceptionFilter,
+    },
   ],
 })
 export class AppModule {}
