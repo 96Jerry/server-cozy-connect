@@ -1,7 +1,15 @@
-import { HttpException, HttpStatus } from '@nestjs/common';
+import { HttpException } from '@nestjs/common';
 
-export class UserExistException extends HttpException {
-  constructor() {
-    super('Conflict: User Already Exist', HttpStatus.CONFLICT);
+export class ExceptionResponse {
+  code: number;
+  message: string;
+}
+
+export class Exception extends HttpException {
+  // private readonly responseError: ResponseError;
+  // private readonly statusCode: number;
+
+  constructor(responseError: ExceptionResponse, statusCode: number) {
+    super(responseError, statusCode);
   }
 }

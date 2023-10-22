@@ -11,17 +11,23 @@ import {
 import { UserService } from './user.service';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
-import { UserExistException } from 'src/exception';
+import {
+  UserExistException,
+  UserPasswdNullException,
+} from 'src/exception/user.exception';
 
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
   @Post()
   async createOne(@Body() createUserDto: CreateUserDto) {
-    const user = await this.userService.findOne({
+    if (!createUserDto.passwd) {
+      throw new UserPasswdNullException();
+    }
+    const dbUser = await this.userService.findOne({
       where: { loginId: createUserDto.loginId },
     });
-    if (user) {
+    if (dbUser) {
       throw new UserExistException();
     }
     return await this.userService.create(createUserDto);

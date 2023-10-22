@@ -9,7 +9,7 @@ import { WorkModule } from './work/work.module';
 import { FamilyModule } from './family/family.module';
 import { AuthModule } from './auth/auth.module';
 import { APP_FILTER } from '@nestjs/core';
-import { HttpExceptionFilter } from './exception/http-exception.filter';
+import { HttpExceptionFilter } from './filter/http-exception.filter';
 
 @Module({
   imports: [

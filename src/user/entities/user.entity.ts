@@ -6,6 +6,7 @@ import {
   ManyToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { UserRole } from '../enums/user-role.enum';
 
 @Entity()
 export class User {
@@ -17,6 +18,9 @@ export class User {
 
   @Column()
   passwd: string;
+
+  @Column({ enum: UserRole })
+  role: UserRole;
 
   @ManyToMany(() => Work)
   @JoinTable()
